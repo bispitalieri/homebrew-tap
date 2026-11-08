@@ -47,3 +47,17 @@ change.
 The updater reads the public upstream release API, so no cross-repository
 credentials are required. The tap repository's Actions workflow needs its
 standard `contents: write` permission to commit the updated cask.
+
+## Issues
+
+For Biolaris Media app bugs, please file an issue at
+[bispitalieri/biolaris-media/issues](https://github.com/bispitalieri/biolaris-media/issues).
+For problems with this cask (such as an incorrect checksum or an installation
+failure), [open an issue in this tap repository](https://github.com/bispitalieri/homebrew-tap/issues).
+
+## License
+
+Biolaris Media is released under the
+[AGPL-3.0-only license](https://github.com/bispitalieri/biolaris-media/blob/main/LICENSE).
+The cask file in this repository is released under the BSD 2-Clause License,
+matching Homebrew's convention for tap repositories.
