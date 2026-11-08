@@ -109,6 +109,27 @@ Then retry the installation:
 brew install --cask biolaris-media
 ```
 
+### macOS says the app is damaged or should be moved to the Trash
+
+Some macOS releases may block the app because the release is not signed or
+notarized. If you downloaded it from the official Biolaris Media GitHub
+Releases page and trust it, reinstall without Homebrew's quarantine attribute:
+
+```sh
+brew reinstall --cask --no-quarantine biolaris-media
+```
+
+If the app is already installed, you can instead remove the quarantine
+attribute from that app only:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Biolaris Media.app"
+```
+
+If Homebrew installed the app somewhere other than `/Applications`, replace
+that path with its installed location. These commands bypass Gatekeeper's
+quarantine check for this app; do not disable Gatekeeper system-wide.
+
 ### Check the installed version
 
 ```sh
