@@ -1,0 +1,39 @@
+name: Update Biolaris Media Homebrew manifests
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-biolaris-media-cask
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Check upstream release and update cask
+        run: python3 scripts/update-cask.py
+
+      - name: Commit cask update
+        run: |
+          if git diff --quiet -- Casks/biolaris-media.rb; then
+            echo "The cask is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Casks/biolaris-media.rb
+          git commit -m "Update Biolaris Media Homebrew manifests"
+          git push
