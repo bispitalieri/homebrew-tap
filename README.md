@@ -1,63 +1,139 @@
-# Biolaris Media Homebrew tap
+# Biolaris Media — Homebrew Tap
 
-Install Biolaris Media with Homebrew:
+Install **Biolaris Media** using Homebrew on macOS and Linux.
+
+This repository provides the official Homebrew Cask for Biolaris Media. All application packages are downloaded directly from the official [Biolaris Media GitHub Releases](https://github.com/bispitalieri/biolaris-media/releases).
+
+## Requirements
+
+- [Homebrew](https://brew.sh/) installed.
+- macOS (Apple Silicon or Intel) or Linux (x86_64).
+- Internet connection.
+
+## Installation
+
+### 1. Add the Biolaris tap
 
 ```sh
-brew tap bispitalieri/homebrew-tap
+brew tap bispitalieri/tap
 ```
 
-On macOS, install the official Apple silicon or Intel app:
+### 2. Trust the cask
+
+Homebrew 6 and newer may require explicit trust before installing casks from third-party taps.
+
+```sh
+brew trust bispitalieri/tap
+```
+
+This authorizes Homebrew to load the Biolaris Media cask without granting trust to every package in the tap.
+
+### 3. Install Biolaris Media
 
 ```sh
 brew install --cask biolaris-media
 ```
 
-On Linux x86_64, install the official AppImage:
+Homebrew automatically selects the appropriate package for your platform:
+
+| Platform | Package |
+|---|---|
+| macOS Apple Silicon (ARM64) | DMG |
+| macOS Intel (x86_64) | DMG |
+| Linux x86_64 | AppImage |
+
+All packages are official release artifacts published in [GitHub Releases](https://github.com/bispitalieri/biolaris-media/releases).
+
+## Updating
+
+To update Homebrew's metadata and install the latest available version:
 
 ```sh
-brew install --cask biolaris-media
+brew update
+brew upgrade --cask biolaris-media
 ```
 
-Both use artifacts from
-[Biolaris Media GitHub Releases](https://github.com/bispitalieri/biolaris-media/releases).
+The cask is automatically maintained by a GitHub Actions workflow that:
 
-## Uninstall
+- Checks for new stable releases every six hours.
+- Supports manual execution.
+- Verifies architecture-specific DMG and Linux AppImage SHA-256 checksums.
+- Updates the cask version, download URLs, and checksums.
+- Commits changes automatically when a newer release is available.
 
-Homebrew removes the installed application and managed files when uninstalling.
-On macOS, `brew uninstall --cask biolaris-media` quits the app first. To also
-remove its app-specific support data, caches, preferences, saved window state,
-WebKit data, and launch-agent plist, run:
+No manual intervention or cross-repository credentials are required by the updater. The workflow uses the public upstream GitHub Releases API and the tap repository's standard `contents: write` permission.
+
+## Uninstallation
+
+To uninstall Biolaris Media:
+
+```sh
+brew uninstall --cask biolaris-media
+```
+
+### macOS: Remove application data
+
+To additionally remove Biolaris Media's application-specific support data, caches, preferences, saved window state, WebKit data, and launch-agent plist, run:
 
 ```sh
 brew zap --cask biolaris-media
 ```
 
-On Linux, `brew uninstall --cask biolaris-media` removes the AppImage and its
-Homebrew-managed desktop integration. User data outside the Homebrew prefix is
-left untouched.
+**Note:** `zap` removes additional application data that would normally be preserved during a regular uninstall.
 
-## Automatic updates
+### Linux
 
-The `Update Biolaris Media cask` GitHub Actions workflow checks the latest stable
-release every six hours and can also be started manually. When a newer version
-is available, it verifies the release's architecture-specific DMGs and Linux
-AppImage SHA-256 checksums, updates `Casks/biolaris-media.rb`, and commits the
-change.
+On Linux, uninstalling the cask removes the AppImage and its Homebrew-managed desktop integration.
 
-The updater reads the public upstream release API, so no cross-repository
-credentials are required. The tap repository's Actions workflow needs its
-standard `contents: write` permission to commit the updated cask.
+User data stored outside the Homebrew prefix is left untouched.
 
-## Issues
+## Troubleshooting
 
-For Biolaris Media app bugs, please file an issue at
-[bispitalieri/biolaris-media/issues](https://github.com/bispitalieri/biolaris-media/issues).
-For problems with this cask (such as an incorrect checksum or an installation
-failure), [open an issue in this tap repository](https://github.com/bispitalieri/homebrew-tap/issues).
+### Untrusted tap error
+
+If Homebrew reports:
+
+```text
+Error: Refusing to load cask bispitalieri/tap/biolaris-media from untrusted tap
+```
+
+Run:
+
+```sh
+brew trust --cask bispitalieri/tap/biolaris-media
+```
+
+Then retry the installation:
+
+```sh
+brew install --cask biolaris-media
+```
+
+### Check the installed version
+
+```sh
+brew list --cask --versions biolaris-media
+```
+
+### Refresh the tap
+
+If the cask does not show the latest version:
+
+```sh
+brew update
+brew upgrade --cask biolaris-media
+```
+
+## Issues and Support
+
+For application bugs, feature requests, or general Biolaris Media support, please use the main repository:
+
+- [Biolaris Media — Issues](https://github.com/bispitalieri/biolaris-media/issues)
+
+For Homebrew-specific problems, such as incorrect checksums, installation failures, or cask configuration issues, please open an issue in this repository:
+
+- [Homebrew Tap — Issues](https://github.com/bispitalieri/homebrew-tap/issues)
 
 ## License
 
-Biolaris Media is released under the
-[AGPL-3.0-only license](https://github.com/bispitalieri/biolaris-media/blob/main/LICENSE).
-The cask file in this repository is released under the BSD 2-Clause License,
-matching Homebrew's convention for tap repositories.
+Biolaris Media is distributed under the [AGPL-3.0-only license](https://github.com/bispitalieri/biolaris-media/blob/main/LICENSE).
